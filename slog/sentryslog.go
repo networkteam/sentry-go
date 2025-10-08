@@ -3,7 +3,6 @@ package sentryslog
 import (
 	"context"
 	"errors"
-	"fmt"
 	"log/slog"
 
 	"github.com/getsentry/sentry-go"
@@ -189,7 +188,6 @@ func (h *eventHandler) Handle(ctx context.Context, record slog.Record) error {
 
 	fromContext := contextExtractor(ctx, h.option.AttrFromContext)
 	event := h.option.Converter(h.option.AddSource, h.option.ReplaceAttr, append(h.attrs, fromContext...), h.groups, &record, hub)
-	fmt.Println("converted to event", event)
 	if event != nil {
 		hub.CaptureEvent(event)
 	}
